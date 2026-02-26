@@ -13,6 +13,9 @@ $bonus = 0;
 $lucky_status = "";
 $final_computation = "";
 
+// Start session only once
+session_start();
+
 // Process Ang Pao form submission
 if (isset($_POST['add_angpao'])) {
     $value = filter_var($_POST['angpao_value'], FILTER_VALIDATE_FLOAT);
@@ -23,7 +26,6 @@ if (isset($_POST['add_angpao'])) {
     if ($value !== false && $value >= 0 && is_numeric($_POST['angpao_value']) && 
         !preg_match('/[eE]/', $_POST['angpao_value'])) {
         
-        session_start();
         if (!isset($_SESSION['angpaoEntries'])) {
             $_SESSION['angpaoEntries'] = [];
         }
@@ -53,7 +55,6 @@ if (isset($_POST['add_food'])) {
     if ($value !== false && $value >= 0 && is_numeric($_POST['food_value']) && 
         !preg_match('/[eE]/', $_POST['food_value'])) {
         
-        session_start();
         if (!isset($_SESSION['foodEntries'])) {
             $_SESSION['foodEntries'] = [];
         }
@@ -70,7 +71,6 @@ if (isset($_POST['add_food'])) {
 
 // Process Lunar Year check
 if (isset($_POST['check_year'])) {
-    session_start();
     $selected_year = intval($_POST['lunar_year']);
     $zodiac = getChineseZodiac($selected_year);
     $_SESSION['zodiac'] = $zodiac;
@@ -80,8 +80,6 @@ if (isset($_POST['check_year'])) {
 
 // Process Calculation
 if (isset($_POST['calculate'])) {
-    session_start();
-    
     // Get all entries
     $angpaoEntries = isset($_SESSION['angpaoEntries']) ? $_SESSION['angpaoEntries'] : [];
     $foodEntries = isset($_SESSION['foodEntries']) ? $_SESSION['foodEntries'] : [];
@@ -114,42 +112,42 @@ if (isset($_POST['calculate'])) {
         $remaining_money *= 2;
         $remaining_money += 500;
         $bonus = 500;
-        $result_messages[] = "🐉 DRAGON YEAR BONUS! Money doubled + ₱500! 🐉";
+        $result_messages[] = "DRAGON YEAR BONUS! Money doubled + ₱500!";
     }
     
     // Check conditions
     if ($total_angpao > 5000) {
-        $result_messages[] = "💰 Paldooooo!!!!! 💰";
+        $result_messages[] = "Paldooooo!!!!!";
     } else {
-        $result_messages[] = "😢 awit. 😢";
+        $result_messages[] = "awit.";
     }
     
     if ($luckyNumber == 8) {
-        $result_messages[] = "✨ Humaharurot nanaman si manoy! ✨";
+        $result_messages[] = "Humaharurot nanaman si manoy!";
     } else {
-        $result_messages[] = "🤬 MGA BOBO!! 🤬";
+        $result_messages[] = "MGA BOBO!!";
     }
     
     if ($foodExpenses > $total_angpao) {
-        $result_messages[] = "💸 Gastos AMP. 💸";
+        $result_messages[] = "Gastos AMP.";
     } else {
-        $result_messages[] = "🍑 pa pwet yern 🍑";
+        $result_messages[] = "pa pwet yern";
     }
     
     if ($remaining_money > 5000 && $luckyNumber == 8) {
-        $result_messages[] = "🔥 DAMNNN!!!! 🔥";
+        $result_messages[] = "DAMNNN!!!!";
     } else {
-        $result_messages[] = "😞 :(( 😞";
+        $result_messages[] = ":(( ";
     }
     
     if ($remaining_money > 5000 || $isDragonYear) {
-        $result_messages[] = "⚠️ DO NOT REDEEM IT!!! ⚠️";
+        $result_messages[] = "DO NOT REDEEM IT!!!";
     } else {
-        $result_messages[] = "😐 :( 😐";
+        $result_messages[] = ":(";
     }
     
     if (!$isDragonYear) {
-        $result_messages[] = "❌ NOT Dragon Year - No double bonus ❌";
+        $result_messages[] = "NOT Dragon Year - No double bonus";
     }
     
     // Final values for display
@@ -185,9 +183,6 @@ function getZodiacImage($zodiac) {
     ];
     return isset($images[$zodiac]) ? $images[$zodiac] : 'rat.png';
 }
-
-// Start session
-session_start();
 ?>
 
 <!DOCTYPE html>
@@ -275,7 +270,7 @@ session_start();
             if (isset($_SESSION['angpaoEntries'])) {
                 $count = count($_SESSION['angpaoEntries']);
                 $current_lucky = 8 + ($count * 2);
-                echo "<p class='info-text'>📊 Total Ang Pao: $count | Lucky Number: $current_lucky 📊</p>";
+                echo "<p class='info-text'>Total Ang Pao: $count | Lucky Number: $current_lucky</p>";
             }
             ?>
         </div>
@@ -329,7 +324,7 @@ session_start();
             <?php
             if (isset($_SESSION['foodEntries'])) {
                 $total_food = array_sum(array_column($_SESSION['foodEntries'], 'value'));
-                echo "<p class='info-text'>🍽️ Total Food: ₱" . number_format($total_food, 2) . " 🍽️</p>";
+                echo "<p class='info-text'>Total Food: ₱" . number_format($total_food, 2) . "</p>";
             }
             ?>
         </div>
