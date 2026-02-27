@@ -13,10 +13,14 @@
 }
 
 :root {
-    --bg-red: #A12015;        /* Website background */
-    --container-cream: #FAE0BD; /* Container background */
-    --text-primary: #BD4630;    /* Primary text color */
-    --text-dark: #020202;       /* Secondary text color */
+    --bg-red: #A12015;
+    /* Website background */
+    --container-cream: #FAE0BD;
+    /* Container background */
+    --text-primary: #BD4630;
+    /* Primary text color */
+    --text-dark: #020202;
+    /* Secondary text color */
     --shadow-color: rgba(161, 32, 21, 0.5);
 }
 
@@ -43,15 +47,17 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at top right, 
-                rgba(161, 32, 21, 0.4) 0%, 
-                transparent 70%);
+    background: radial-gradient(circle at top right,
+            rgba(161, 32, 21, 0.4) 0%,
+            transparent 70%);
     pointer-events: none;
     z-index: 0;
 }
 
 /* Decorative elements positioning - ALL IMAGES MAX 40px */
-.decor-left, .decor-right, .decor-bottom {
+.decor-left,
+.decor-right,
+.decor-bottom {
     position: fixed;
     pointer-events: none;
     z-index: 1;
@@ -85,13 +91,13 @@ body::before {
 }
 
 /* ALL DECORATIVE IMAGES MAX 40px */
-.lantern-left, 
-.lantern-right, 
-.cloud-left, 
-.cloud-right, 
+.lantern-left,
+.lantern-right,
+.cloud-left,
+.cloud-right,
 .cloud-bottom,
-.flower-left, 
-.flower-right, 
+.flower-left,
+.flower-right,
 .flower-bottom,
 .coin-bottom {
     width: 30px;
@@ -107,7 +113,7 @@ body::before {
     padding: 20px;
     position: relative;
     z-index: 10;
-    box-shadow: 
+    box-shadow:
         0 25px 50px -12px rgba(161, 32, 21, 0.7),
         0 0 0 1px rgba(161, 32, 21, 0.2) inset;
     border-radius: 30px;
@@ -132,8 +138,8 @@ body::before {
 }
 
 /* ALL HEADER IMAGES MAX 40px */
-.header-money, 
-.header-gift, 
+.header-money,
+.header-gift,
 .header-coin {
     width: 35px;
     max-width: 40px;
@@ -215,6 +221,7 @@ body::before {
 .transportation-card {
     border-top: 8px solid var(--text-dark);
 }
+
 .lunar-card {
     border-top: 8px solid var(--bg-red);
 }
@@ -566,85 +573,89 @@ body::before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .decor-left, .decor-right {
+
+    .decor-left,
+    .decor-right {
         display: none;
     }
-    
+
     .container {
         margin: 10px;
         padding: 10px;
     }
-    
+
     .header h1 {
         font-size: 1.8rem;
     }
-    
+
     .header-images {
         gap: 10px;
     }
-    
-    .header-money, .header-gift, .header-coin {
+
+    .header-money,
+    .header-gift,
+    .header-coin {
         width: 28px;
     }
-    
+
     .form-group {
         flex-direction: column;
     }
-    
+
     .form-group input {
         width: 100%;
     }
-    
+
     .card-header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
     }
-    
+
     .header-with-icon {
         flex-direction: column;
     }
-    
+
     .card-header h2 {
         font-size: 1.3rem;
     }
-    
+
     .section-icon {
         width: 25px;
     }
-    
+
     .data-table {
         font-size: 0.8rem;
     }
-    
+
     .data-table th,
     .data-table td {
         padding: 8px 4px;
     }
-    
+
     .btn {
         width: 100%;
         font-size: 0.85rem;
     }
-    
+
     .zodiac-image {
         width: 40px;
     }
-    
+
     .zodiac-result h3 {
         font-size: 1.1rem;
     }
-    
+
     .results h3 {
         font-size: 1.5rem;
     }
-    
+
     .computation-grid p {
         flex-direction: column;
         text-align: center;
         gap: 5px;
     }
-    
+
     .results-header {
         flex-direction: column;
         gap: 8px;
@@ -653,6 +664,7 @@ body::before {
 
 /* Print Styles */
 @media print {
+
     .btn,
     .input-form,
     .reset-section,
@@ -661,11 +673,11 @@ body::before {
     .decor-bottom {
         display: none;
     }
-    
+
     body::before {
         display: none;
     }
-    
+
     .card {
         break-inside: avoid;
         border: 2px solid var(--text-primary);
@@ -692,5 +704,38 @@ body::before {
     background: var(--bg-red);
 }
 
+.angpao-card .btn-primary:disabled,
+.angpao-card .btn-primary.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #ccc;
+}
 
+.angpao-card .input-form.disabled-form {
+    opacity: 0.6;
+    pointer-events: none;
+}
 
+.angpao-card .input-form.disabled-form::before {
+    content: "⚠️ MAXIMUM LIMIT REACHED (3/3)";
+    display: block;
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-left: 5px solid #c62828;
+}
+
+.limit-badge {
+    background-color: #c62828;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 10px;
+}

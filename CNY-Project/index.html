@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ang Pao Calculator - Lunar New Year</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- DECORATIVE ELEMENTS -->
+    <div class="decor-left">
+        <img src="Img/lantern.png" alt="Lantern" class="lantern-left">
+        <img src="Img/cloud.png" alt="Cloud" class="cloud-left">
+        <img src="Img/flower.png" alt="Flower" class="flower-left">
+    </div>
+
+    <div class="decor-right">
+        <img src="Img/lantern.png" alt="Lantern" class="lantern-right">
+        <img src="Img/cloud.png" alt="Cloud" class="cloud-right">
+        <img src="Img/flower.png" alt="Flower" class="flower-right">
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-images">
+                <img src="Img/money.png" alt="Money" class="header-money">
+                <img src="Img/gift-bag.png" alt="Gift Bag" class="header-gift">
+                <img src="Img/chinese-coin.png" alt="Coin" class="header-coin">
+            </div>
+            <h1>ANG PAO CALCULATOR</h1>
+            <p class="subtitle">Lunar New Year Fortune Manager</p>
+        </header>
+
+        <!-- ANG PAO CONTAINER (MAX 3 ENTRIES) -->
+        <?php include 'includes/angpao-section.php'; ?>
+
+        <!-- FOOD EXPENSE CONTAINER -->
+        <?php include 'includes/food-section.php'; ?>
+
+        <!-- TRANSPORTATION EXPENSE CONTAINER -->
+        <?php include 'includes/transport-section.php'; ?>
+
+        <!-- LUNAR YEAR CHECKER -->
+        <?php include 'includes/lunar-section.php'; ?>
+
+        <!-- CALCULATION SECTION -->
+        <?php include 'includes/calculation-section.php'; ?>
+
+        <!-- RESET BUTTON -->
+        <div class="reset-section">
+            <form method="POST" action="index.php">
+                <button type="submit" name="reset" class="btn btn-reset"
+                    onclick="return confirm('Reset all data? This cannot be undone!')">
+                    <img src="Img/cloud.png" alt="Reset" class="btn-icon"> Reset All Data
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BOTTOM DECORATIVE ELEMENTS -->
+    <div class="decor-bottom">
+        <img src="Img/flower.png" alt="Flower" class="flower-bottom">
+        <img src="Img/cloud.png" alt="Cloud" class="cloud-bottom">
+        <img src="Img/chinese-coin.png" alt="Coin" class="coin-bottom">
+    </div>
+
+    <!-- SCRIPTS -->
+    <?php if (isset($scroll_to_results) && $scroll_to_results): ?>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                var resultsSection = document.getElementById('results-section');
+                if (resultsSection) {
+                    resultsSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 100);
+        };
+    </script>
+    <?php endif; ?>
+
+    <?php if ($angpao_limit_reached): ?>
+    <script>
+        // This runs when PHP detects limit reached
+        document.addEventListener('DOMContentLoaded', function () {
+            const angpaoForm = document.querySelector('.angpao-card .input-form');
+            const angpaoBtn = document.querySelector('button[name="add_angpao"]');
+
+            if (angpaoForm) {
+                const inputs = angpaoForm.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.disabled = true;
+                    input.placeholder = 'Limit reached (3/3)';
+                });
+            }
+
+            if (angpaoBtn) {
+                angpaoBtn.disabled = true;
+                angpaoBtn.style.opacity = '0.5';
+                angpaoBtn.style.cursor = 'not-allowed';
+            }
+        });
+    </script>
+    <?php endif; ?>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
