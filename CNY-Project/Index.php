@@ -38,9 +38,6 @@ if ($scroll_to_results) {
 if (isset($_POST['add_angpao'])) {
     $current_count = isset($_SESSION['angpaoEntries']) ? count($_SESSION['angpaoEntries']) : 0;
 
-    if ($current_count >= 3) {
-        $error_message = "Maximum of 3 Ang Pao entries only! Please reset to add new ones.";
-    } else {
         $value = filter_var($_POST['angpao_value'], FILTER_VALIDATE_FLOAT);
         $origin = htmlspecialchars($_POST['angpao_origin']);
         $notes = htmlspecialchars($_POST['angpao_notes']);
@@ -65,7 +62,6 @@ if (isset($_POST['add_angpao'])) {
             $luckyNumber += (count($entries) * 2);
             $_SESSION['luckyNumber'] = $luckyNumber;
         }
-    }
     
     // Redirect to prevent form resubmission
     header('Location: ' . $_SERVER['PHP_SELF']);
@@ -374,7 +370,7 @@ if (isset($_POST['reset'])) {
             <div class="card-header">
                 <div class="header-with-icon">
                     <img src="Img/money.png" alt="Money" class="section-icon">
-                    <h2>Ang Pao Container</h2>
+                    <h2>Ang Pao</h2>
                 </div>
                 <span class="badge">Max 3 Entries</span>
             </div>
@@ -422,6 +418,12 @@ if (isset($_POST['reset'])) {
                     <input type="text" name="angpao_origin" placeholder="From who? (e.g., Lolo, Tita)" required maxlength="50">
                     <input type="text" name="angpao_notes" placeholder="Note (optional)" maxlength="100">
                 </div>
+
+                <!-- Notification div (hidden by default) -->
+    <div id="angpaoLimitNotif" style="display: none; background-color: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-weight: bold; border-left: 5px solid #c62828;">
+        ⚠️ MAXIMUM LIMIT! You can't add more than 3 Ang Pao entries.
+    </div>
+
                 <button type="submit" name="add_angpao" class="btn btn-primary">
                     <img src="Img/gift-bag.png" alt="Add" class="btn-icon"> Add Ang Pao
                 </button>
@@ -730,7 +732,7 @@ if (isset($_POST['reset'])) {
     </div>
 
     <!-- ============================================ -->
-    <!-- SCROLL TO RESULTS SCRIPT -->
+    <!-- SCRIPT -->
     <!-- ============================================ -->
     <?php if ($scroll_to_results): ?>
     <script>
@@ -745,6 +747,41 @@ if (isset($_POST['reset'])) {
                 }
             }, 100);
         };
+
+        function checkAngpaoLimit() {
+    // Get current count from the table
+    var tableRows = document.querySelectorAll('.angpao-card tbody tr');
+    var currentCount = 0;
+    
+    // Count only data rows (not the "No entries" message)
+    tableRows.forEach(function(row) {
+        if (row.cells.length > 1 && !row.innerHTML.includes('No Ang Pao entries yet')) {
+            currentCount++;
+        }
+    });
+    
+    // Check if limit reached
+    if (currentCount >= 3) {
+        // Show notification
+        var notif = document.getElementById('angpaoLimitNotif');
+        notif.style.display = 'block';
+        
+        // Highlight the button to show it's disabled
+        var btn = document.getElementById('addAngpaoBtn');
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+        
+        // Auto hide after 3 seconds
+        setTimeout(function() {
+            notif.style.display = 'none';
+        }, 3000);
+        
+        // Prevent form submission
+        return false;
+    }
+    
+    return true;
+}
     </script>
     <?php endif; ?>
 </body>
