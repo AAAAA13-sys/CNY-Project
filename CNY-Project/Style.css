@@ -212,6 +212,9 @@ body::before {
     border-top: 8px solid var(--text-dark);
 }
 
+.transportation-card {
+    border-top: 8px solid var(--text-dark);
+}
 .lunar-card {
     border-top: 8px solid var(--bg-red);
 }
@@ -688,3 +691,6 @@ body::before {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--bg-red);
 }
+
+
+
